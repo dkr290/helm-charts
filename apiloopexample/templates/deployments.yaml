@@ -1,0 +1,50 @@
+{{- range $key, $value := .Values.apiApps }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $value.name }}-deployment
+  namespace: {{ $.Values.namespaceName }}
+  labels:
+    {{- include "apiApps.labels" $ | nindent 4 }}
+    modelname: {{ $value.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ $value.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $value.name }}
+    spec:
+      serviceAccountName: {{ $.Values.serviceAccount.name }}
+      automountServiceAccountToken: {{ $.Values.automountServiceAccountToken }}
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ $value.name }}-container
+          image: {{ $value.docker_registry }}/{{ $value.image_name }}:{{ $value.tag_version }}
+          imagePullPolicy: {{ $value.pullPolicy }}
+          resources:
+          {{- with $.Values.resources }}
+            {{- toYaml . |  nindent 12 }}  
+          {{- end }}
+      {{- with $.Values.imagePullSecret }}   
+      imagePullSecrets:
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+{{- end }}

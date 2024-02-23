@@ -1,0 +1,87 @@
+# Default values for modelzoo.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+namespaceName: api-ns
+env: "dev"
+
+imagePullSecret: {}
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+ingress:
+  tls:
+    enabled: true
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+    ephemeral-storage: 1Gi
+  requests:
+    cpu: 500m
+    memory: 256Mi
+automountServiceAccountToken: false
+
+monitoring:
+  namespaceName: prometheus
+  path: metrics
+  interval: 15s
+  prometheus_service: monitoring-kube-prometheus-prometheus
+  pollingInterval: 15
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  scaleDown:
+    stabilizationWindowSeconds: 30
+    policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 30
+  scaleUp:
+    stabilizationWindowSeconds: 0
+    policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 10
+
+serviceAccount:
+  create: true
+  automount: false
+  annotations: {}
+  name: "api-sa"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 3000
+  fsGroup: 2000
+
+nodeSelector: {}
+
+affinity: {}
+
+tolerations: {}
+
+
+apiApps:
+  app1:
+    name: app-1
+    docker_registry: docker.io
+    image_name: nginx
+    tag_version: 1.20.0 
+    ingressHost: app-1-ingress
+    pullPolicy: Always
+  app2:
+    name: app-2
+    docker_registry: docker.io
+    image_name: nginx
+    tag_version: 1.19.0
+    ingressHost: app-2-ingress
+    pullPolicy: Always
+  
+
