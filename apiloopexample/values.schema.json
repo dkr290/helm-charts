@@ -1,0 +1,367 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Generated schema for Root",
+    "type": "object",
+    "properties": {
+      "replicaCount": {
+        "type": "number",
+        "minimum": 1
+      },
+      "namespaceName": {
+        "type": "string"
+      },
+      "env": {
+        "type": "string"
+      },
+      "imagePullSecret": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "service": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "port": {
+            "type": "number"
+          },
+          "targetPort": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "type",
+          "port",
+          "targetPort"
+        ]
+      },
+      "ingress": {
+        "type": "object",
+        "properties": {
+          "tls": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "enabled"
+            ]
+          }
+        },
+        "required": [
+          "tls"
+        ]
+      },
+      "resources": {
+        "type": "object",
+        "properties": {
+          "limits": {
+            "type": "object",
+            "properties": {
+              "cpu": {
+                "type": "string"
+              },
+              "memory": {
+                "type": "string"
+              },
+              "ephemeral-storage": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "cpu",
+              "memory",
+              "ephemeral-storage"
+            ]
+          },
+          "requests": {
+            "type": "object",
+            "properties": {
+              "cpu": {
+                "type": "string"
+              },
+              "memory": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "cpu",
+              "memory"
+            ]
+          }
+        },
+        "required": [
+          "limits",
+          "requests"
+        ]
+      },
+      "automountServiceAccountToken": {
+        "type": "boolean"
+      },
+      "monitoring": {
+        "type": "object",
+        "properties": {
+          "namespaceName": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "interval": {
+            "type": "string"
+          },
+          "prometheus_service": {
+            "type": "string"
+          },
+          "pollingInterval": {
+            "type": "number"
+          },
+          "cooldownPeriod": {
+            "type": "number"
+          },
+          "minReplicaCount": {
+            "type": "number"
+          },
+          "maxReplicaCount": {
+            "type": "number"
+          },
+          "scaleDown": {
+            "type": "object",
+            "properties": {
+              "stabilizationWindowSeconds": {
+                "type": "number"
+              },
+              "policies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "number"
+                    },
+                    "periodSeconds": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "value",
+                    "periodSeconds"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "stabilizationWindowSeconds",
+              "policies"
+            ]
+          },
+          "scaleUp": {
+            "type": "object",
+            "properties": {
+              "stabilizationWindowSeconds": {
+                "type": "number"
+              },
+              "policies": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "number"
+                    },
+                    "periodSeconds": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "value",
+                    "periodSeconds"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "stabilizationWindowSeconds",
+              "policies"
+            ]
+          }
+        },
+        "required": [
+          "namespaceName",
+          "path",
+          "interval",
+          "prometheus_service",
+          "pollingInterval",
+          "cooldownPeriod",
+          "minReplicaCount",
+          "maxReplicaCount",
+          "scaleDown",
+          "scaleUp"
+        ]
+      },
+      "serviceAccount": {
+        "type": "object",
+        "properties": {
+          "create": {
+            "type": "boolean"
+          },
+          "automount": {
+            "type": "boolean"
+          },
+          "annotations": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "create",
+          "automount",
+          "annotations",
+          "name"
+        ]
+      },
+      "podSecurityContext": {
+        "type": "object",
+        "properties": {
+          "runAsNonRoot": {
+            "type": "boolean"
+          },
+          "runAsUser": {
+            "type": "number"
+          },
+          "runAsGroup": {
+            "type": "number"
+          },
+          "fsGroup": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "runAsNonRoot",
+          "runAsUser",
+          "runAsGroup",
+          "fsGroup"
+        ]
+      },
+      "nodeSelector": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "affinity": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "tolerations": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "apiApps": {
+        "type": "object",
+        "properties": {
+          "app1": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "docker_registry": {
+                "type": "string"
+              },
+              "image_name": {
+                "type": "string"
+              },
+              "tag_version": {
+                "type": "string"
+              },
+              "ingressHost": {
+                "type": "string"
+              },
+              "pullPolicy": {
+                "type": "string",
+                "pattern": "^(Always|Never|IfNotPresent)$"
+              }
+            },
+            "required": [
+              "name",
+              "docker_registry",
+              "image_name",
+              "tag_version",
+              "ingressHost",
+              "pullPolicy"
+            ]
+          },
+          "app2": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "docker_registry": {
+                "type": "string"
+              },
+              "image_name": {
+                "type": "string"
+              },
+              "tag_version": {
+                "type": "string"
+              },
+              "ingressHost": {
+                "type": "string"
+              },
+              "pullPolicy": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "docker_registry",
+              "image_name",
+              "tag_version",
+              "ingressHost",
+              "pullPolicy"
+            ]
+          }
+        },
+        "required": [
+          "app1",
+          "app2"
+        ]
+      }
+    },
+    "required": [
+      "replicaCount",
+      "namespaceName",
+      "env",
+      "imagePullSecret",
+      "service",
+      "ingress",
+      "resources",
+      "automountServiceAccountToken",
+      "monitoring",
+      "serviceAccount",
+      "podSecurityContext",
+      "nodeSelector",
+      "affinity",
+      "tolerations",
+      "apiApps"
+    ]
+  }

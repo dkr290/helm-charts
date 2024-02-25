@@ -71,16 +71,16 @@ tolerations: {}
 apiApps:
   app1:
     name: app-1
-    docker_registry: docker.io
-    image_name: nginx
-    tag_version: 1.20.0 
+    docker_registry: ghcr.io/dkr290/devops-projects
+    image_name: goappv1
+    tag_version: c0322977 
     ingressHost: app-1-ingress
     pullPolicy: Always
   app2:
     name: app-2
-    docker_registry: docker.io
-    image_name: nginx
-    tag_version: 1.19.0
+    docker_registry: ghcr.io/dkr290/devops-projects
+    image_name: goappv
+    tag_version: c0322977
     ingressHost: app-2-ingress
     pullPolicy: Always
   
