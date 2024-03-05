@@ -1,0 +1,27 @@
+{{- range $key, $value := .Values.apiApps }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $value.name }}-vs
+  namespace: {{ $.Values.namespaceName }}
+spec:
+  hosts:
+    - {{ $value.name }}.local
+  gateways:
+    - gateway
+  http:
+    - route:
+        - destination:
+            host: {{ $value.name }}-service.{{ $.Values.namespaceName  }}.svc.cluster.local
+            port:
+              number: {{ $.Values.service.port }}
+            subset: {{ $value.blue.version }}
+          weight: {{ $value.blue.weight }}
+        - destination:
+            host: {{ $value.name }}-service.{{ $.Values.namespaceName  }}.svc.cluster.local
+            port:
+              number: {{ $.Values.service.port }}
+            subset: {{ $value.green.version }}
+          weight: {{ $value.green.weight }}
+{{- end }}
