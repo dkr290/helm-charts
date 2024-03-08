@@ -13,6 +13,27 @@ service:
   port: 8080
   targetPort: 8080
 
+monitoring:
+  namespaceName: prometheus
+  path: metrics
+  interval: 15s
+  prometheus_service: monitoring-kube-prometheus-prometheus
+  pollingInterval: 15
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  scaleDown:
+    stabilizationWindowSeconds: 30
+    policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 30
+  scaleUp:
+    stabilizationWindowSeconds: 0
+    policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 10
 
 resources:
   limits:
@@ -54,12 +75,12 @@ apiApps:
       image_name: goappv1
       tag_version: c0322977 
       type: one
-      weight: 0
+      weight: 100
     two:
       image_name: goappv2
       tag_version: latest
       type: two
-      weight: 100
+      weight: 0
   app2:
     name: app-2
     pullPolicy: Always
