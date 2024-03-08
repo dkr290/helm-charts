@@ -6,7 +6,7 @@ metadata:
   namespace: {{ $.Values.namespaceName }}
   name: {{ $value.name }}-{{ $value.two.tag_version }}-monitor
   labels:
-    {{- include "apiApps.labels" . | nindent 4 }}
+    {{- include "apiApps.labels" $ | nindent 4 }}
   
 spec:
   selector:
