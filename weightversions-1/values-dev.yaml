@@ -1,0 +1,78 @@
+# Default values for modelzoo.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+namespaceName: api-ns
+env: "dev"
+
+imagePullSecret: {}
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+    ephemeral-storage: 1Gi
+  requests:
+    cpu: 500m
+    memory: 256Mi
+automountServiceAccountToken: false
+
+
+
+serviceAccount:
+  create: true
+  automount: false
+  annotations: {}
+  name: "api-sa"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 3000
+  fsGroup: 2000
+
+nodeSelector: {}
+
+affinity: {}
+
+tolerations: {}
+
+
+apiApps:
+  app1:
+    name: app-1
+    pullPolicy: Always
+    docker_registry: ghcr.io/dkr290/devops-projects
+    one:
+      image_name: goappv1
+      tag_version: c0322977 
+      type: one
+      weight: 0
+    two:
+      image_name: goappv2
+      tag_version: latest
+      type: two
+      weight: 100
+  app2:
+    name: app-2
+    pullPolicy: Always
+    docker_registry: ghcr.io/dkr290/devops-projects
+    one:
+      image_name: webv1
+      tag_version: v1
+      type: one
+      weight: 100
+    two:
+      image_name: webv2
+      tag_version: v2
+      type: two
+      weight: 0
+    
+
