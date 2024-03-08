@@ -3,7 +3,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  namespace: {{ $.Values.namespaceName }}
+  namespace: {{ $.Values.monitoring.namespaceName }}
   name: {{ $value.name }}-{{ $value.two.tag_version }}-monitor
   labels:
     {{- include "apiApps.labels" $ | nindent 4 }}
