@@ -1,0 +1,39 @@
+{{- range $key, $value := .Values.apiApps }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $value.name }}-{{ $value.one.model_version }}-vs
+  namespace: {{ $.Values.namespaceName }}
+spec:
+  hosts:
+    - {{ $value.name }}.{{ $value.one.model_version }}.172.19.8.2.nip.io
+  gateways:
+    - gateway
+  http:
+    - route:
+        - destination:
+            host: {{ $value.name }}-service.{{ $.Values.namespaceName  }}.svc.cluster.local
+            port:
+              number: {{ $.Values.service.port }}
+            subset: {{ $value.one.model_version }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $value.name }}-{{ $value.two.model_version }}-vs
+  namespace: {{ $.Values.namespaceName }}
+spec:
+  hosts:
+    - {{ $value.name }}.{{ $value.two.model_version }}.172.19.8.2.nip.io
+  gateways:
+    - gateway
+  http:
+    - route:
+        - destination:
+            host: {{ $value.name }}-service.{{ $.Values.namespaceName  }}.svc.cluster.local
+            port:
+              number: {{ $.Values.service.port }}
+            subset: {{ $value.two.model_version }}
+       
+{{- end }}

@@ -1,0 +1,24 @@
+{{- range $key, $value := .Values.apiApps }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $value.name }}-{{ $value.one.model_version }}-service
+  namespace: {{ $.Values.namespaceName }}
+  annotations:
+    prometheus.io/port: "api-port"
+    prometheus.io/scrape: "true"
+  labels:
+    app: {{ $value.name }}-{{ $value.one.model_version }}-service
+    version: {{ $value.one.model_version }}
+spec:
+  selector:
+    app: {{ $value.name }}
+    type: "one"
+    version: {{ $value.one.model_version }}
+  ports:
+    - protocol: TCP
+      name: {{ $value.name }}-web
+      port: {{ $.Values.service.port }}
+      targetPort: {{ $.Values.service.targetPort }}
+{{- end }}

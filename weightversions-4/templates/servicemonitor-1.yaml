@@ -1,0 +1,24 @@
+{{- range $key, $value := .Values.apiApps }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  namespace: {{ $.Values.monitoring.namespaceName }}
+  name: {{ $value.name }}-{{ $value.one.model_version }}-monitor
+  labels:
+    {{- include "apiApps.labels" $ | nindent 4 }}
+  
+spec:
+  selector:
+    matchLabels:
+      app: {{ $value.name }}-{{ $value.one.model_version }}-service
+      version: {{ $value.one.model_version }}
+
+  endpoints:
+  - port: {{ $value.name }}-web
+    path: {{ $.Values.monitoring.path }}
+    interval: {{ $.Values.monitoring.interval }}
+  namespaceSelector:
+    matchNames:
+      - {{ $.Values.namespaceName }}
+{{- end }}

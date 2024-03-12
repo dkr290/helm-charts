@@ -1,0 +1,39 @@
+{{- range $key, $value := .Values.apiApps }}
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ $value.name }}-{{ $value.one.model_version }}-scaledobject
+  namespace: {{ $.Values.namespaceName }}
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: {{ $value.name }}-{{ $value.one.model_version }}-deployment
+  # Interval to when to query Prometheus
+  pollingInterval: {{ $.Values.monitoring.pollingInterval }} 
+  # The period to wait after the last trigger reported active
+  # before scaling the deployment back to 1
+  cooldownPeriod: {{ $.Values.monitoring.cooldownPeriod }}
+  minReplicaCount: {{ $.Values.monitoring.minReplicaCount }}
+  maxReplicaCount: {{ $.Values.monitoring.maxReplicaCount }}
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+        {{- with $.Values.monitoring.scaleDown }}   
+          {{- toYaml  . | nindent 10 }}
+        {{- end }}
+        scaleUp:
+        {{- with $.Values.monitoring.scaleUp }}   
+          {{- toYaml  . | nindent 10 }}
+        {{- end }}
+  triggers:
+    - type: prometheus
+      metadata:
+        # address where keda can reach our prometheus on
+        serverAddress: http://{{ $.Values.monitoring.prometheus_service }}.{{ $.Values.monitoring.namespaceName }}.svc.cluster.local:9090
+        metricName: total_prediction_requests_rate_{{ $value.one.model_version }}
+        threshold: "2"
+        query: "sum(rate(gin_gin_requests_total{service='{{ $value.name }}-{{ $value.one.model_version }}-service'}[45s]))"
+
+{{- end }}
