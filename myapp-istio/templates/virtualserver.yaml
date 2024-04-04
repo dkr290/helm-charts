@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: myapp-virtualservice
+spec:
+  gateways:
+  - myapp-gateway
+  hosts:
+  - myapp.172.19.8.2.nip.io
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: {{ include "myapp.fullname" . }}
+        port:
+          number: 80
