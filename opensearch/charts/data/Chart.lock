@@ -1,0 +1,6 @@
+dependencies:
+- name: opensearch
+  repository: oci://aabccontainerregistry.azurecr.io/helm
+  version: 2.27.0
+digest: sha256:02678ef8b7adc40c4ded06d44aa4bd0746bcce22380607c08dca448a34e9b4ea
+generated: "2024-11-08T16:08:24.014183001+01:00"

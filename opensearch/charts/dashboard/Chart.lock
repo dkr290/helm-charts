@@ -1,0 +1,6 @@
+dependencies:
+- name: opensearch-dashboards
+  repository: oci://aabccontainerregistry.azurecr.io/helm
+  version: 2.25.0
+digest: sha256:9042c6015edfabad947ccf1a8ebaab0a71f0e28565da79440c14229e0f6bd005
+generated: "2024-11-08T16:14:51.069999512+01:00"
