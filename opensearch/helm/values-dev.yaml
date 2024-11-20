@@ -59,11 +59,17 @@ master:
       - name: opensearch-certificates
         secret:
           secretName: opensearch-certificates
+      - name: internal-users
+        configMap:
+          name: internal-users
 
     extraVolumeMounts:
       - name: opensearch-certificates
         mountPath: /usr/share/opensearch/config/certs # Adjust path as required by the plugin
         readOnly: true
+      - name: internal-users
+        mountPath: /usr/share/opensearch/config/opensearch-security/internal_users.yml
+        subPath: internal_users.yml
 
     extraInitContainers:
       - name: sysctl
@@ -76,8 +82,6 @@ master:
     extraEnvs:
       - name: DISABLE_INSTALL_DEMO_CONFIG
         value: "true"
-      - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-        value: Parola1234##22
 
 data:
   enabled: true
@@ -142,11 +146,17 @@ data:
       - name: opensearch-certificates
         secret:
           secretName: opensearch-certificates
+      - name: internal-users
+        configMap:
+          name: internal-users
 
     extraVolumeMounts:
       - name: opensearch-certificates
         mountPath: /usr/share/opensearch/config/certs # Adjust path as required by the plugin
         readOnly: true
+      - name: internal-users
+        mountPath: /usr/share/opensearch/config/opensearch-security/internal_users.yml
+        subPath: internal_users.yml
 
     extraInitContainers:
       - name: sysctl
@@ -155,6 +165,9 @@ data:
           privileged: true
         command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
     sysctlVmMaxMapCount: 262144
+    extraEnvs:
+      - name: DISABLE_INSTALL_DEMO_CONFIG
+        value: "true"
 
 client:
   enabled: true
@@ -219,11 +232,17 @@ client:
       - name: opensearch-certificates
         secret:
           secretName: opensearch-certificates
+      - name: internal-users
+        configMap:
+          name: internal-users
 
     extraVolumeMounts:
       - name: opensearch-certificates
         mountPath: /usr/share/opensearch/config/certs # Adjust path as required by the plugin
         readOnly: true
+      - name: internal-users
+        mountPath: /usr/share/opensearch/config/opensearch-security/internal_users.yml
+        subPath: internal_users.yml
 
     extraInitContainers:
       - name: sysctl
@@ -232,6 +251,9 @@ client:
           privileged: true
         command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
     sysctlVmMaxMapCount: 262144
+    extraEnvs:
+      - name: DISABLE_INSTALL_DEMO_CONFIG
+        value: "true"
 
 dashboard:
   enabled: true
