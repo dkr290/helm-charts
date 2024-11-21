@@ -62,6 +62,9 @@ master:
       - name: internal-users
         configMap:
           name: internal-users
+      - name: snapshots
+        persistentVolumeClaim:
+          claimName: snapshots
 
     extraVolumeMounts:
       - name: opensearch-certificates
@@ -70,6 +73,8 @@ master:
       - name: internal-users
         mountPath: /usr/share/opensearch/config/opensearch-security/internal_users.yml
         subPath: internal_users.yml
+      - name: snapshots
+        mountPath: /mnt/snapshots
 
     extraInitContainers:
       - name: sysctl
@@ -149,6 +154,9 @@ data:
       - name: internal-users
         configMap:
           name: internal-users
+      - name: snapshots
+        persistentVolumeClaim:
+          claimName: snapshots
 
     extraVolumeMounts:
       - name: opensearch-certificates
@@ -157,6 +165,8 @@ data:
       - name: internal-users
         mountPath: /usr/share/opensearch/config/opensearch-security/internal_users.yml
         subPath: internal_users.yml
+      - name: snapshots
+        mountPath: /mnt/snapshots
 
     extraInitContainers:
       - name: sysctl
@@ -235,6 +245,9 @@ client:
       - name: internal-users
         configMap:
           name: internal-users
+      - name: snapshots
+        persistentVolumeClaim:
+          claimName: snapshots
 
     extraVolumeMounts:
       - name: opensearch-certificates
@@ -243,6 +256,8 @@ client:
       - name: internal-users
         mountPath: /usr/share/opensearch/config/opensearch-security/internal_users.yml
         subPath: internal_users.yml
+      - name: snapshots
+        mountPath: /mnt/snapshots
 
     extraInitContainers:
       - name: sysctl

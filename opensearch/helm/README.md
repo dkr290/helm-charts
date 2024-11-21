@@ -15,3 +15,12 @@ This will be done with the pipeline
 
 TODO: Describe and show how to build your code and run the tests.
 
+```
+  curl -XPUT https://url/\_snapshot/snapshots -H 'Content-Type: application/json' -d '{
+  "type": "fs",
+  "settings": {
+    "location": "/mnt/snapshots"
+  }
+}'
+
+```
