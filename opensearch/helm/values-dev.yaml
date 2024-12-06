@@ -21,6 +21,7 @@ master:
       opensearch.yml: |
         cluster.name: opensearch-cluster
         network.host: 0.0.0.0
+        path.repo: ["/mnt/snapshots"]
         plugins:
           security:
             ssl:
@@ -112,6 +113,7 @@ data:
       opensearch.yml: |
         cluster.name: opensearch-cluster
         network.host: 0.0.0.0
+        path.repo: ["/mnt/snapshots"]
         plugins:
           security:
             ssl:
@@ -200,6 +202,7 @@ client:
       opensearch.yml: |
         cluster.name: opensearch-cluster
         network.host: 0.0.0.0
+        path.repo: ["/mnt/snapshots"]
         plugins:
           security:
             ssl:
