@@ -25,5 +25,9 @@ spec:
       restartPolicy: Never
       containers:
       - name: client2
-        image: "alpine:3.3"
-        command: ["/bin/curl",http://{{ include "hookdemo3.fullname" . }}]
+        image: "busybox"  
+        args: 
+         - /bin/sh
+         - -c
+         - |
+           wget -O - "http://{{ include "hookdemo3.fullname" . }}"
